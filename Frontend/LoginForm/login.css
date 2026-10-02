@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  color: #1a3e5c;
+}
+
+body{
+  font-family: 'Courier New', Courier, monospace;
+  color: black;
+  height: 100vh;
+  width: 100vw;
+}
+body::before{
+  content:"";
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:url('../image/photo-1441974231531-c6227db76b6e.avif');
+  background-size:cover;
+  background-position:center;
+  filter:blur(10px) brightness(0.7);
+  transform:scale(1.1);
+  z-index:-1;
+}
+.loginForm{
+  width: min(370px, 90vw);
+  height: min(600px,90vh);
+  position:absolute;
+  background-color: white;
+  left: 50%;
+  top:50%;
+  transform: translate(-50%,-50%);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.imageLogin{
+  width: 35%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  transition: 0.25s;
+  cursor: pointer;
+}
+.imageLogin:hover{
+  transform: scale(1.08);
+}
+h2{
+  font-size: 2rem;
+}
+.spanForm{
+  background: rgba(255, 222, 0, 0.2);
+  padding: 5px;
+  border-radius: 10px;
+  color: #666;
+  margin-top: 5px;
+}
+.divLogin{
+  margin-top: 25px;
+}
+.formLogin{
+  width: 80%;
+}
+.nameNinput{
+  position: relative;
+}
+.nameNinput input{
+  width: 100%;
+  padding: 15px 15px 15px 45px;
+  border-radius: 10px;
+  font-size:16px;
+  margin-top: 7px;
+  border-color: #666;
+}
+.divLogin label{
+  font-size: 16px;
+  font-weight: 600;
+  
+}
+.nameNinput i {
+  position: absolute;  
+  left: 15px;
+  top: 50%;
+  transform: translateY(-41%);
+  color: #2b5a8c;
+  z-index: 1;
+  font-size: 18px;
+}
+.clickToreveal{
+  cursor: pointer;
+}
+.buttonLogin{
+  margin-top: 25px;
+  margin-bottom: 15px;
+  width: 100%;
+  padding: 15px;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ffde00, #ffb347);
+  transition: all 0.3s;
+  box-shadow: 0 8px 0 #b8860b;  
+  font-size: 1.25rem;
+}
+.buttonLogin:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 0 #b8860b;
+}
+.registerText{
+  font-size: 0.95rem;
+  text-align: center;
+}

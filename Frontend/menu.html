@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <title>Pokemon Battle</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  </head>
+
+  <body>
+    <script src="header.js"></script>
+    <div class="modalWindowForAvatar">
+      <div class="changeAvatarGrid">
+        <h3>Выбери аватар</h3>
+        <div class="avatars"></div>
+        <button class="closeAvatars">Закрыть</button>
+      </div>
+
+    </div>
+    <div class="modal-window">
+      <div class="settings">
+        <h2 class="header-settings">
+          <span><i class="fa-solid fa-chevron-left"></i></span>
+          Настройки
+          <span></span>
+        </h2>
+        <div class="settings-functions">
+          <div class="OneFunctions openAvatar">
+            <div class="gap">
+              <i class="fa fa-camera"></i>
+              <span class="changeAvatar">Сменить аватар</span>
+            </div>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+          
+          <div class="OneFunctions">
+            <div class="gap">
+              <i class="fa fa-volume-up"></i>
+              <span>Звук</span>
+            </div>
+            <div class="toggle"></div>
+          </div>
+          
+          <div class="OneFunctions">
+            <div class="gap">
+              <i class="fa-regular fa-moon"></i>
+              <span>Тема</span>
+            </div>
+            <div class="toggle"></div>
+          </div>
+          
+          <div class="OneFunctions">
+            <div class="gap"> 
+              <i class="fa fa-globe"></i>
+              <span>Язык</span>
+            </div>
+            <select id="langSelect" class="selectLanguage">
+              <option value="RU">RU</option>
+              <option value="EN">日本語</option>
+            </select>
+          </div>
+          
+          <div class="OneFunctions">
+            <div class="gap">
+              <i class="fa fa-info-circle"></i>
+              <span>О игре</span>
+            </div>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+          
+          <div class="OneFunctions">
+            <div class="gap">
+              <i class="fa fa-sign-out"></i>
+              <span class="red">Выйти</span>
+            </div>
+            <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="mainLayout">
+      <div class="stat-pokemon-shop">
+        <!--statisctic-->
+        <div class="card marginADD">
+          <div class="playerNameRank">
+            
+            <i class="fa fa-user-circle avatar-big"></i>
+            <div>
+              <p class="Nickname"></p>
+              <span class="player-rank">
+                <i class="fa fa-trophy"></i>
+                Master
+              </span>
+            </div>
+          </div>
+          <div class="statistic-grid"></div>
+        </div>
+        <!--pokemon-->
+        <div class="card marginADD">
+          <p class="marginADD menuText">
+            <i class="fa fa-paw"></i>
+             Игрок выбери 3 покемонов
+          </p>
+
+          <div class="PokemonSelect">
+            <div class="pokemonGrid"></div> 
+            <div class="amountPokemon">
+              <p class="setText"></p>
+              <button type="button" class="pokemonCard-button">⚔️ В бой</button>
+            </div>
+            
+          </div>    
+        </div>
+        <!--shopich-->
+        <div class="card">
+          <p class="marginADD menuText">
+            <i class="fa fa-flask"></i>
+              Магазин зелий
+          </p>
+          <div class="allpotion"></div>
+        </div>
+      </div>
+
+      <div class="peopleOnline">
+        <div class="player-list"></div>
+        <div class="btn-logout-div"><button class="btn-logout">
+          <i class="fa fa-sign-out"></i>
+          Выйти из аккаунта
+        </button></div>
+      </div>
+    </div>
+
+
+    <script src="menu.js" type="module"></script>
+  </body>
+
+
+</html>

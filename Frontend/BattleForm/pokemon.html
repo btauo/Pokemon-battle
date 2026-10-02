@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="pokemon.css">
+    <link rel="stylesheet" href="../main.css">
+    <link rel="stylesheet" href="../mainLobby/animation.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  </head>
+
+  <body>
+    <script src="../header.js"></script>
+
+    <p class="pokeballImg"><img src="../image/pokeball.png" alt=""></p>
+    
+    <div class="modal-windows-victoryLose">
+      <div class="victoryLose"></div>
+    </div>
+
+    <div class="playerHp">
+      <p class="pokemonName"></p>
+      <div class="display-Flex">
+        <div class="hp-bar">
+          <div class="hp-bar-fill" style="width: 100%;"></div>
+        </div>
+        <p class="procentOfHP">100%</p>
+      </div>
+
+    </div>
+
+    <div class="enemyHp">
+      <p class="pokemonName"></p>
+      <div class="display-Flex">
+        <div class="hp-bar">
+          <div class="hp-bar-fill" style="width: 100%;"></div>
+        </div>
+        <p class="procentOfHP">100%</p>
+      </div>
+    </div>
+
+
+    <div class="divImage pokemonPlayer"></div>
+    <div class="divImage pokemonBot"></div>
+
+    <div class="threeZones">
+      <div class="fightZone">
+        <div class="imageZone"></div>
+        <p class="textUnderImg"></p>
+        <p class="textBattleField attackText">Attack</p>
+        <div class="divSkillName"></div>
+        <div class="Switch-And-Heal">
+          <div>
+            <p class="textBattleField healText">Heal</p>
+            <div class="HealToUse"></div>
+          </div>
+          <div>
+            <p class="textBattleField switchText">Switch</p>
+            <div class="pokemonToSwitch"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="battleLog">
+        <p class="text-Battle-Log">Battle Log</p>
+        
+      </div>
+
+      <div class="someInfo">
+
+
+      </div>
+    </div>
+
+  
+    <script type="module" src="pokemon.js"></script> 
+  </body>
+
+</html>
