@@ -51,8 +51,8 @@ async function loadBattle() {
 }
 await loadBattle();
 enemyId = localStorage.getItem('enemyId') ? localStorage.getItem('enemyId') : (parseInt(myId) === battleData.player1_id) ? battleData.player2_id : battleData.player1_id;
-isMyTurn = localStorage.getItem('enemyId') ? true : (parseInt(myId) === battleData.player1_id) ? true : false;
 
+console.log(battleData)
 
 async function loadInventory() {
   const response = await fetch(`http://localhost:5000/api/inventory?player_id=${myId}`);
@@ -60,6 +60,21 @@ async function loadInventory() {
   return data.items;
 }
 
+async function getLastMove() {
+  const response = await fetch(`http://localhost:5000/api/battle/last-turn?battle_id=${battleId}&player_id=${myId}`);
+  const result = await response.json();
+  if (result.who === 'none') return { who: 'none' };
+  if (result.who === 'me') return { who: 'me', ...result };
+  if (result.who === 'enemy') return { who: 'enemy', ...result };
+}
+
+const lastMove = await getLastMove();
+if (lastMove.who === 'none') isMyTurn = localStorage.getItem('enemyId') ? true : (parseInt(myId) === battleData.player1_id) ? true : false;
+else if (lastMove.who === 'me') isMyTurn = false;
+else if (lastMove.who === 'enemy') isMyTurn = true;
+
+let lastTurn = (lastMove.turn?lastMove.turn:0);
+console.log(lastMove);
 
 /*=====================HTML-Wrapper=====================*/
 let htmlToadd = "";
@@ -67,7 +82,7 @@ battleData.my_team.forEach((element) => {
   if(element.статус==="active") currentPokemon = element.имя;
   if(element.статус === "fainted"){
     htmlToadd += `
-      <button class="changePokemon lowopacity" style="disabled"><img src="../image/${element.имя}.png" class="imgSwitch" alt=""> ${element.имя}</button>
+      <button class="changePokemon lowopacity" disabled><img src="../image/${element.имя}.png" class="imgSwitch" alt=""> ${element.имя}</button>
     `;   
   }
   else{
@@ -154,6 +169,21 @@ battleLog.innerHTML += `
   <p class="log-entry log-enemy-action">Ememy sent out ${enemyCurrentPokemon}</p>
 `;
 
+battleData.my_team.forEach((element)=>{
+  if(element.статус==='active'){
+    const procent = Math.floor((element.текущее_hp / element.базовое_hp) * 100);
+    myFill.style.width = procent + '%';
+    myProcentText.textContent = procent + '%';    
+  }
+});
+
+battleData.enemy_team.forEach((element)=>{
+  if(element.статус==='active'){
+    const procent = Math.floor((element.текущее_hp / element.базовое_hp) * 100);
+    enemyFill.style.width = procent + '%';
+    enemyProcentText.textContent = procent + '%';    
+  }
+});
 
 /*=====================Async-Functions=====================*/
 async function enemySwitchPokemon() {
@@ -505,10 +535,11 @@ pokemonSwitchButtons.forEach((element)=>{
 
 menuButton.addEventListener('click', ()=>{
   console.log('check');
+  window.location.href = '/menu.html';
 });
 
 /*=====================Blitz-Battle=====================*/
-let lastTurn = 0;
+
 
 
 let isChecking = false;

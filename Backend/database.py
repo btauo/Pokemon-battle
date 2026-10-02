@@ -364,7 +364,57 @@ class Database:
     
 
     
-#==============================================PokemonBattle==============================================#    
+#==============================================PokemonBattle==============================================#   
+    def get_last_turn(self, battle_id, player_id):
+        """Получить последний ход + определить, кто ходил"""
+        conn = self.connect()
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT 
+                х.номер_хода,
+                х.id_игрока,
+                и.имя AS имя_игрока,
+                а.название AS имя_атаки,
+                х.урон,
+                х.id_защищающегося
+            FROM Ход_боя х
+            JOIN Игрок и ON х.id_игрока = и.id_игрока
+            JOIN Атаки а ON х.id_атаки = а.id_атаки
+            WHERE х.id_сессии = ?
+            ORDER BY х.номер_хода DESC
+            LIMIT 1
+        ''', [battle_id])
+        
+        row = cursor.fetchone()
+        conn.close()
+        
+        # ← СИТУАЦИЯ 1: ходов нет
+        if not row:
+            return {
+                'status': 'ok',
+                'turn': None,
+                'who': 'none',           # ← ходов нет
+                'player_id': None,
+                'player_name': None,
+                'attack_name': None,
+                'damage': None
+            }
+        
+        # ← СИТУАЦИЯ 2 / 3: ход есть
+        who = 'me' if int(row[1]) == int(player_id) else 'enemy'
+        
+        return {
+            'status': 'ok',
+            'turn': row[0],
+            'who': who,                   # ← 'me' или 'enemy'
+            'player_id': row[1],
+            'player_name': row[2],
+            'attack_name': row[3],
+            'damage': row[4],
+            'target_id': row[5]
+        } 
+    
     def pokemonSkills(self):
         conn = self.connect()
         cursor = conn.cursor()

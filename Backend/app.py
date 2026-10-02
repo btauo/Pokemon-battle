@@ -179,6 +179,13 @@ def api_buy_item():
     data = request.json
     result = db.buy_item(data['player_id'], data['item_id'])
     return jsonify(result)
+
+@app.route('/api/battle/last-turn', methods=['GET'])
+def api_last_turn():
+    battle_id = request.args.get('battle_id')
+    player_id = request.args.get('player_id')
+    result = db.get_last_turn(battle_id, player_id)
+    return jsonify(result)
 # ========== СТАТИКА ==========
 
 @app.route('/')
