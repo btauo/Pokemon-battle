@@ -1,13 +1,14 @@
 if (!localStorage.getItem('player_id')) window.location.href = 'LoginForm/login.html';
 
+import { renderHeader } from '../header.js';
+renderHeader();
+
 localStorage.removeItem('enemyId');
 localStorage.removeItem('battle_id');
 
 window.addEventListener('load', function() {
     ChangeStatus('afk');
 });
-
-
 
 
 /*=====================Переменные=====================*/

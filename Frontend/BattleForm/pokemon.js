@@ -2,6 +2,8 @@ if (!localStorage.getItem('player_id')) window.location.href = 'LoginForm/login.
 if (!localStorage.getItem('battle_id')) window.location.href = 'menu.html';
 
 import {updateButtonAnimationForPokemon} from '../mainLobby/animation.js';
+import { renderHeader } from '../header.js';
+renderHeader();
 
 /*=====================Переменные=====================*/
 const myId = localStorage.getItem('player_id');
@@ -21,6 +23,7 @@ const myFill = document.querySelector('.playerHp .hp-bar-fill');
 const myProcentText = document.querySelector('.playerHp .procentOfHP');
 const mypokemonNewName = document.querySelector('.playerHp .pokemonName');
 const battleLog = document.querySelector('.battleLog');
+const menuButton = document.querySelector('.menuButton');
 
 let pokemonSkills = [];
 let battleData = [];
@@ -41,7 +44,7 @@ async function loadPokemonSkills() {
   pokemonSkills = await response.json();
 }
 await loadPokemonSkills();
-console.log('pokemonSkills:', pokemonSkills);
+
 async function loadBattle() {
   const response = await fetch(`http://localhost:5000/api/battle/info?battle_id=${battleId}&player_id=${myId}`);
   battleData = await response.json();
@@ -49,7 +52,7 @@ async function loadBattle() {
 await loadBattle();
 enemyId = localStorage.getItem('enemyId') ? localStorage.getItem('enemyId') : (parseInt(myId) === battleData.player1_id) ? battleData.player2_id : battleData.player1_id;
 isMyTurn = localStorage.getItem('enemyId') ? true : (parseInt(myId) === battleData.player1_id) ? true : false;
-console.log(battleData);
+
 
 async function loadInventory() {
   const response = await fetch(`http://localhost:5000/api/inventory?player_id=${myId}`);
@@ -498,6 +501,10 @@ pokemonSwitchButtons.forEach((element)=>{
       }, 450);
     }, 600);
   });
+});
+
+menuButton.addEventListener('click', ()=>{
+  console.log('check');
 });
 
 /*=====================Blitz-Battle=====================*/
