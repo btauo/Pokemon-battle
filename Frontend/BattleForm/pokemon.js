@@ -76,6 +76,19 @@ else if (lastMove.who === 'enemy') isMyTurn = true;
 let lastTurn = (lastMove.turn?lastMove.turn:0);
 console.log(lastMove);
 
+
+// Если покемон умер(fainted) и страница обновилась. получается у нас нет active и мы рисуем последнего покемона по которому проходил урон
+if(lastMove.who === 'me'){
+  battleData.enemy_team.forEach((element) => {
+    if(element.id===lastMove.target_id) enemyCurrentPokemon = element.имя;
+  });
+}
+else{
+  battleData.my_team.forEach((element) => {
+    if(element.id===lastMove.target_id) currentPokemon = element.имя;
+  });
+}
+
 /*=====================HTML-Wrapper=====================*/
 let htmlToadd = "";
 battleData.my_team.forEach((element) => {
@@ -92,6 +105,10 @@ battleData.my_team.forEach((element) => {
   }
 });
 switchHtml.innerHTML = htmlToadd;
+
+battleData.enemy_team.forEach((element) => {
+  if(element.статус==="active") enemyCurrentPokemon = element.имя;
+});
 
 function updateTextUnderImg(pokemonName) {
   const allButtonAttack = document.querySelectorAll('.buttonsAttack');
@@ -154,9 +171,8 @@ async function reloadInventory() {
 }
 reloadInventory();
 
-battleData.enemy_team.forEach((element) => {
-  if(element.статус==="active") enemyCurrentPokemon = element.имя;
-});
+
+
 enemyPokemon.innerHTML = `<img src="../image/inMove_bot/${enemyCurrentPokemon}.gif" alt="" class="EnemyPokemonImage"></img>`;
 const setPokemonName_HpBar = document.querySelectorAll('.pokemonName');
 setPokemonName_HpBar[0].innerText = currentPokemon;
@@ -170,15 +186,19 @@ battleLog.innerHTML += `
 `;
 
 battleData.my_team.forEach((element)=>{
-  if(element.статус==='active'){
+  if(element.имя===currentPokemon){
     const procent = Math.floor((element.текущее_hp / element.базовое_hp) * 100);
     myFill.style.width = procent + '%';
-    myProcentText.textContent = procent + '%';    
+    myProcentText.textContent = procent + '%'; 
+    if(element.текущее_hp === 0 && isMyTurn) {
+      myPokemonFainted = 1;
+      blocked = true;
+    }
   }
 });
 
 battleData.enemy_team.forEach((element)=>{
-  if(element.статус==='active'){
+  if(element.имя===enemyCurrentPokemon){
     const procent = Math.floor((element.текущее_hp / element.базовое_hp) * 100);
     enemyFill.style.width = procent + '%';
     enemyProcentText.textContent = procent + '%';    
@@ -478,6 +498,7 @@ const pokemonSwitchButtons = document.querySelectorAll('.changePokemon');
 pokemonSwitchButtons.forEach((element)=>{
   element.addEventListener('click', async function(e) {
     if (this.innerText === currentPokemon || e.target.disabled || !isMyTurn) return;
+    console.log("sdfsdfsdfsdfsd");
     if(blocked && myPokemonFainted==0) return;
     blocked = true;
     currentPokemon = this.innerText;
