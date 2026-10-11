@@ -24,6 +24,7 @@ const myProcentText = document.querySelector('.playerHp .procentOfHP');
 const mypokemonNewName = document.querySelector('.playerHp .pokemonName');
 const battleLog = document.querySelector('.battleLog');
 const menuButton = document.querySelector('.menuButton');
+const modal_menu = document.querySelector('.modal-menu');
 
 let pokemonSkills = [];
 let battleData = [];
@@ -371,19 +372,18 @@ async function usePotion(itemId) {
   
   return result;
 }
-async function endBattle(winnerId, loserId) {
+async function endBattle(winnerId, loserId, surrender = false) {
   const response = await fetch('http://localhost:5000/api/battle/end', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
       battle_id: battleId,
       winner_id: winnerId,
-      loser_id: loserId
+      loser_id: loserId,
+      surrender: surrender  
     })
   });
-  const data = await response.json();
-  console.log('Результат боя:', data);
-  return data;
+  return await response.json();
 }
 
 function showVictoryScreen(isPlayerWin) {
@@ -555,10 +555,17 @@ pokemonSwitchButtons.forEach((element)=>{
 });
 
 menuButton.addEventListener('click', ()=>{
-  console.log('check');
-  window.location.href = '/menu.html';
+  modal_menu.style.display = 'block';
 });
-
+modal_menu.addEventListener('click', (element)=>{
+  if(element.target.className === 'modal-menu') modal_menu.style.display = 'none';
+  if(element.target.className === 'button-quit-menu menu-keep') modal_menu.style.display = 'none';
+  if(element.target.className === 'button-quit-menu menu-quit') {
+    modal_menu.style.display = 'none';
+    endBattle(enemyId, myId, true);
+    setTimeout(()=>{window.location.href = '/menu.html';},50);
+  }
+});
 /*=====================Blitz-Battle=====================*/
 
 

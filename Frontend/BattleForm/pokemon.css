@@ -359,36 +359,105 @@
   }
 }
 
+.modal-menu{
+  top: 0;
+  left: 0;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 101;
+  display: none;
+}
+
+.window-menu{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  width: min(480px, 92vw);
+  height: min(260px, 92vh);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(180deg, #fffbe6 0%, #ffe680 100%);
+  border: 6px solid #1b2a6b;
+  box-shadow: 0 0 0 6px #ffcb05;
+  border-radius: 15px;
+}
+.quit-text-menu{
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin: 50px 0 12px 0 ;
+  color: #1b2a6b;
+  text-shadow: 1px 1px 0 #fff, 2px 2px 0 rgba(0, 0, 0, 0.15);
+}
+.warning-text-menu{
+  width: 92%;
+  padding: 12px 8px;
+  font-size: 0.9rem;
+  text-align: center;
+  border: dashed 3px rgb(231, 42, 42);
+  background: #faf1cd;
+  color: #4e1906;
+}
+.div-quit-menu{
+  margin: 16px 0 5px 0;
+}
+.button-quit-menu{
+  font-size: 1.02rem;
+  padding: 8px 14px 8px 14px;
+  border-radius: 8px;
+  transition:0.25s;
+  color: aliceblue;
+  border: 3px solid #1b2a6b;
+  
+}
+.menu-keep{
+  background: #53a9eb;
+}
+.menu-quit{
+  background: #c71111;
+}
+.button-quit-menu:hover {
+  transform: translateY(-2px);           
+  box-shadow: 0 7px 0 #1b2a6b;             
+}
+.button-quit-menu:active {
+   transform: translateY(3px);        
+  box-shadow: 0 2px 0 #1b2a6b;             
+}
+
 
 .log-entry {
-    margin: 6px 0;
-    padding: 8px 12px;
-    border-radius: 4px;
-    animation: logAppear 0.5s ease;
+  margin: 6px 0;
+  padding: 8px 12px;
+  border-radius: 4px;
+  animation: logAppear 0.5s ease;
 }
 
 .log-join {
-    font-weight: bold;
-    letter-spacing: 1px;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
 .log-player-action {
-    border-left: 3px solid #4CAF50;
+  border-left: 3px solid #4CAF50;
 }
 
 .log-enemy-action {
-    border-left: 3px solid #f44336;
+  border-left: 3px solid #f44336;
 }
 
 @keyframes logAppear {
-    from {
-        opacity: 0;
-        transform: translateX(-15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .log-turn {

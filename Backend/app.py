@@ -95,7 +95,8 @@ def api_end_battle():
     result = db.end_battle(
         data['battle_id'],
         data['winner_id'],
-        data['loser_id']
+        data['loser_id'],
+        data.get('surrender', False)   
     )
     return jsonify(result)
 

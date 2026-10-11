@@ -738,7 +738,7 @@ class Database:
         
         return {'status': 'ok', 'message': 'Покемон успешно заменен'}
     
-    def end_battle(self, battle_id, winner_id, loser_id):
+    def end_battle(self, battle_id, winner_id, loser_id, surrender=False):
         conn = self.connect()
         cursor = conn.cursor()
         
@@ -749,30 +749,32 @@ class Database:
             conn.close()
             return {'status': 'already_finished'}
         
-        cursor.execute('''
-            WITH RECURSIVE levels(i) AS (
-                SELECT 1
-                UNION ALL
-                SELECT i + 1 FROM levels WHERE i < 99
-            )
-            UPDATE Покемоны_игрока
-            SET 
-                уровень = уровень + CASE 
-                    WHEN (текущий_опыт + CASE WHEN id_игрока = ? THEN 100 ELSE 50 END) >= (
-                        SELECT COALESCE(SUM(i * 100), 0) 
-                        FROM levels 
-                        WHERE i <= (SELECT уровень FROM Покемоны_игрока пп2 WHERE пп2.id_покемона_игрока = Покемоны_игрока.id_покемона_игрока)
-                    )
-                    THEN 1 
-                    ELSE 0 
-                END,
-                текущий_опыт = текущий_опыт + CASE WHEN id_игрока = ? THEN 100 ELSE 50 END
-            WHERE id_покемона_игрока IN (
-                SELECT id_покемона_игрока FROM Покемон_в_бою WHERE id_сессии = ?
-            )
-        ''', [winner_id, winner_id, battle_id])
+        # ← ОПЫТ — только если НЕ сдача
+        if not surrender:
+            cursor.execute('''
+                WITH RECURSIVE levels(i) AS (
+                    SELECT 1
+                    UNION ALL
+                    SELECT i + 1 FROM levels WHERE i < 99
+                )
+                UPDATE Покемоны_игрока
+                SET 
+                    уровень = уровень + CASE 
+                        WHEN (текущий_опыт + CASE WHEN id_игрока = ? THEN 100 ELSE 50 END) >= (
+                            SELECT COALESCE(SUM(i * 100), 0) 
+                            FROM levels 
+                            WHERE i <= (SELECT уровень FROM Покемоны_игрока пп2 WHERE пп2.id_покемона_игрока = Покемоны_игрока.id_покемона_игрока)
+                        )
+                        THEN 1 
+                        ELSE 0 
+                    END,
+                    текущий_опыт = текущий_опыт + CASE WHEN id_игрока = ? THEN 100 ELSE 50 END
+                WHERE id_покемона_игрока IN (
+                    SELECT id_покемона_игрока FROM Покемон_в_бою WHERE id_сессии = ?
+                )
+            ''', [winner_id, winner_id, battle_id])
         
-        # Статистика — всё в SQL
+        # ← Статистика — всегда
         cursor.execute('''
             UPDATE Игрок SET 
                 победы = победы + 1, 
@@ -787,20 +789,20 @@ class Database:
             UPDATE Игрок SET 
                 поражения = поражения + 1, 
                 всего_боёв = всего_боёв + 1,
-                рейтинг = рейтинг - 15, 
+                рейтинг = MAX(0, рейтинг - 15), 
                 опыт_игрока = опыт_игрока + 20,
                 монеты = монеты + 50
             WHERE id_игрока = ?
         ''', [loser_id])
         
-        # Очистка и завершение
+        # Очистка
         cursor.execute('DELETE FROM Ход_боя WHERE id_сессии = ?', [battle_id])
         cursor.execute('DELETE FROM Покемон_в_бою WHERE id_сессии = ?', [battle_id])
         cursor.execute("UPDATE Игровая_сессия SET статус = 'finished', победитель = ? WHERE id_сессии = ?", [winner_id, battle_id])
         
         conn.commit()
         conn.close()
-        return {'status': 'ok', 'winner': winner_id, 'loser': loser_id}
+        return {'status': 'ok', 'winner': winner_id, 'loser': loser_id, 'surrender': surrender}
 
 
 #==============================================AsyncBattle==============================================#
