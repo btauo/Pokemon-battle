@@ -270,72 +270,72 @@
 
 @keyframes grow {
   0% {
-    width: 0;
-    height: 0;
-    color: transparent;
-    background: transparent;
-    border-top: 2px solid var(--anim-color);
-    border-bottom: 2px solid transparent;
-    border-left: 2px solid transparent;
-    border-right: 2px solid transparent;
-    box-shadow: none;
+  width: 0;
+  height: 0;
+  color: transparent;
+  background: transparent;
+  border-top: 2px solid var(--anim-color);
+  border-bottom: 2px solid transparent;
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
+  box-shadow: none;
   }
   33% {
-    width: 750px;
-    height: 0;
-    color: transparent;
-    background: transparent;
-    border-top: 2px solid var(--anim-color);
-    border-bottom: 2px solid transparent;
-    border-left: 2px solid transparent;
-    border-right: 2px solid transparent;
-    box-shadow: none;
+  width: 750px;
+  height: 0;
+  color: transparent;
+  background: transparent;
+  border-top: 2px solid var(--anim-color);
+  border-bottom: 2px solid transparent;
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
+  box-shadow: none;
   }
   33.1% {
-    width: 750px;
-    height: 0;
-    color: transparent;
-    border: solid 2px var(--anim-color);
-    box-shadow: none;
+  width: 750px;
+  height: 0;
+  color: transparent;
+  border: solid 2px var(--anim-color);
+  box-shadow: none;
   }
   66% {
-    width: 750px;
-    height: 200px;
-    color: transparent;
-    border: solid 2px var(--anim-color);
-    box-shadow: var(--anim-color) 0px 0px 10px, var(--anim-glow) 0px 0px 20px; 
+  width: 750px;
+  height: 200px;
+  color: transparent;
+  border: solid 2px var(--anim-color);
+  box-shadow: var(--anim-color) 0px 0px 10px, var(--anim-glow) 0px 0px 20px; 
   }
   66.1% {
-    width: 750px;
-    height: 200px;
-    color: var(--anim-text);
-    font-size: 1rem;
-    border: solid 2px var(--anim-color);   
-    box-shadow: var(--anim-color) 0px 0px 10px, var(--anim-glow) 0px 0px 20px;            
+  width: 750px;
+  height: 200px;
+  color: var(--anim-text);
+  font-size: 1rem;
+  border: solid 2px var(--anim-color);   
+  box-shadow: var(--anim-color) 0px 0px 10px, var(--anim-glow) 0px 0px 20px;            
   }
   86% {
-    width: 750px;
-    height: 200px;
-    color: var(--anim-text);
-    font-size: 6.5rem;
-    border: solid 2px var(--anim-color);
-    box-shadow: var(--anim-color) 0px 0px 10px, var(--anim-glow) 0px 0px 20px; 
+  width: 750px;
+  height: 200px;
+  color: var(--anim-text);
+  font-size: 6.5rem;
+  border: solid 2px var(--anim-color);
+  box-shadow: var(--anim-color) 0px 0px 10px, var(--anim-glow) 0px 0px 20px; 
   }
   93% {
-    width: 750px;
-    height: 200px;
-    border: solid 2px var(--anim-color);
-    color: var(--anim-text);   
-    font-size: 4.5rem;         
-    box-shadow: var(--anim-color) 0px 0px 10px, var(--anim-glow) 0px 0px 20px; 
+  width: 750px;
+  height: 200px;
+  border: solid 2px var(--anim-color);
+  color: var(--anim-text);   
+  font-size: 4.5rem;         
+  box-shadow: var(--anim-color) 0px 0px 10px, var(--anim-glow) 0px 0px 20px; 
   }
   100% {
-    width: 750px;
-    height: 200px;
-    border: solid 2px var(--anim-color);
-    color: var(--anim-text);
-    font-size: 5rem;
-    box-shadow: var(--anim-color) 0px 0px 10px, var(--anim-glow) 0px 0px 20px; 
+  width: 750px;
+  height: 200px;
+  border: solid 2px var(--anim-color);
+  color: var(--anim-text);
+  font-size: 5rem;
+  box-shadow: var(--anim-color) 0px 0px 10px, var(--anim-glow) 0px 0px 20px; 
   }
 }
 .modal-windows-victoryLose{
@@ -367,7 +367,7 @@
   width: 100vw;
   background: rgba(0, 0, 0, 0.4);
   z-index: 101;
-  display: none;
+  
 }
 
 .window-menu{
@@ -384,6 +384,73 @@
   border: 6px solid #1b2a6b;
   box-shadow: 0 0 0 6px #ffcb05;
   border-radius: 15px;
+  animation: modalpop 0.3s;
+}
+@keyframes modalpop {
+  0%{transform: translate(-50%, -50%) scale(0.7); opacity: 0;}
+  70%{transform: translate(-50%, -50%) scale(1.05); opacity: 1;}
+  100%{transform: translate(-50%, -50%) scale(1); opacity: 1;}
+}
+.pokeball-menu{
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.pokeball-color{
+  width: 76px;
+  height: 76px;
+  background-color: white;
+  border: 5px solid #1b2a6b;
+  border-radius: 50%;
+  position: relative; 
+  overflow: hidden; 
+  animation: rotate 1.6s infinite;
+}
+@keyframes rotate {
+  0%, 100%{
+    transform: rotate(0deg);
+  }
+  20%{
+    transform: rotate(12deg);
+  }
+  40%{
+    transform: rotate(-12deg);
+  }
+  60%{
+    transform: rotate(8deg);
+  }
+  80%{
+    transform: rotate(-8deg);
+  }
+}
+.pokeball-color-top{
+  background: #ee1515;
+  height: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.pokeball-color-line{
+  position: absolute;
+  background: #1b2a6b;
+  height: 8px;
+  top: calc(50% - 4px);
+  left: 0;
+  right: 0;
+}
+.pokeball-center{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: 0;
+  transform: translate(-50%, -50%);
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  background: #f5f5f5;
+  border: 4px solid #1b2a6b;
 }
 .quit-text-menu{
   font-weight: 700;
