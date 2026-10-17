@@ -14,21 +14,17 @@ window.addEventListener('load', function() {
 /*=====================Переменные=====================*/
 const arrayText = ['🏆 Побед', '💔 Поражений', '⭐ Рейтинг', '🎮 Игр', '🏅 Winrate', `<img src="./image/coin.png" alt="" class="coinImage">&nbsp;Монет`]; /* two array to draw html */
 const arrayObj = ['победы', 'поражения', 'рейтинг', 'всего_боёв', '🏅 Winrate', 'монеты']; /* two array to draw html */
-const imgname = ['smallHeal', 'mediumHeal', 'bigHeal']; /* image name of heal */
-const potionName = ['Малое зелье', 'Среднее зелье', 'Большое зелье']; /* name of heal */
 const price = [100,300,800]; /* price of heal */
 const pokemonGrid = document.querySelector('.pokemonGrid'); /* grid of six pokemons later draw html */
 const setText = document.querySelector('.setText'); /* text under six pokemons "Выбрано: 0/3" - selected 0/3. to change number*/
 const buttonBattle = document.querySelector('.pokemonCard-button'); /* button under six pokemons to enter fidner battle */
 const myPokemons = await loadMyPokemons(); /* [{имя,опыт,опыт_некст,уровень}, ...] */
-const players = await getAllPlayers(); /* list of player with some info like status etc */
 let stats = document.querySelector('.statistic-grid'); /* stats of player like amonut of games winrate etc */
 let allpotionBlock = document.querySelector('.allpotion'); /* potions of healing spells */
 let pointerPlayerList = document.querySelector('.player-list');/* player in menu righted */
 let menu_stats_of_player_html_set = '';
 let six_pokemon_grid_html = '';
 let potion_HTML_to_Set = '';
-let htmlToAddToPlayerList = ''; /* list of player right in menu change every 3 secends */
 let PlayerPick = []; /* current selected pokemons */
 let checkForReady = false; /* boolean checking for is pressed button_battle? if not we can change selected pokemon */
 let statisticOfPlayer = null; /* {amount_battle, date_reg, nickname, coins, exp, wins, loses, raiting, status, level} */
@@ -171,7 +167,6 @@ async function drawShop() {
             });
             
             const result = await response.json();
-            alert(result.message);
             if (result.status === 'ok') {
                 drawShop();
                 updateCoinsDisplay();
@@ -380,21 +375,30 @@ function showChallengePopup(battleId) {
     if (existing) existing.remove();
     
     let popup = document.createElement('div');
-    popup.id = 'challenge-popup';
-    popup.style.cssText = `
-        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-        background: #2a2a4a; border: 2px solid gold; border-radius: 12px;
-        padding: 30px; z-index: 9999; text-align: center; color: white;
-    `;
     popup.innerHTML = `
-        <h3>⚔️ Вас вызывают на бой!</h3>
-        <button id="accept-blitz" style="margin:10px; padding:10px 30px; background:#4CAF50; border:none; border-radius:8px; color:white; cursor:pointer; font-size:16px;">Принять</button>
-        <button id="decline-blitz" style="margin:10px; padding:10px 30px; background:#f44336; border:none; border-radius:8px; color:white; cursor:pointer; font-size:16px;">Отклонить</button>
-    `;
+        <div class="modal-menu">
+            <div class="window-menu">
+                <div class="pokeball-menu">
+                    <div class="pokeball-color">
+                        <div class="pokeball-color-top"></div>
+                        <div class="pokeball-color-line"></div>
+                        <div class="pokeball-center"></div>
+                    </div>
+                </div>
+                <p class="quit-text-menu">Вас вызывают на бой!</p>
+                <div class="div-quit-menu">
+                    <button class="button-quit-menu menu-accept"> Принять</button>
+                    <button class="button-quit-menu menu-quit"> Отклонить</button>
+                </div>
+            </div>
+        </div>
+    `
+    popup.id = 'challenge-popup';
+
     document.body.appendChild(popup);
     
-    document.getElementById('accept-blitz').onclick = () => acceptChallenge(battleId);
-    document.getElementById('decline-blitz').onclick = () => cancelChallenge(battleId);
+    document.querySelector('.menu-accept').onclick = () => acceptChallenge(battleId);
+    document.querySelector('.menu-quit').onclick = () => cancelChallenge(battleId);
 }
 
 function hideChallengePopup() {
@@ -446,9 +450,13 @@ async function checkBattle() {
     // Проверяем вызвали ли меня
     const checkRes = await fetch(`http://localhost:5000/api/battle/check?player_id=${playerId}`);
     const checkData = await checkRes.json();
+    console.log(checkData);
     
     if (checkData.called) {
-        showChallengePopup(checkData.battle_id);
+        const existing = document.getElementById('challenge-popup');
+        if (!existing) {
+            showChallengePopup(checkData.battle_id);
+        }
     }
     
     // Проверяем не начался ли бой

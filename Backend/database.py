@@ -1274,15 +1274,22 @@ class Database:
             conn.close()
             return {'status': 'error', 'message': 'Недостаточно монет'}
         
-        # Добавляем или увеличиваем количество
         cursor.execute('''
-            INSERT INTO Инвентарь (id_игрока, id_предмета, количество) VALUES (?, ?, 1)
-            ON CONFLICT(id_игрока, id_предмета) DO UPDATE SET количество = количество + 1
+            SELECT id_инвентаря, количество FROM Инвентарь
+            WHERE id_игрока = ? AND id_предмета = ?
         ''', [player_id, item_id])
         
-        # Если ON CONFLICT не работает (нет UNIQUE), используй старый вариант:
-        # cursor.execute("SELECT id_инвентаря FROM Инвентарь WHERE id_игрока = ? AND id_предмета = ?", [player_id, item_id])
-        # ...
+        row = cursor.fetchone()
+        if row:
+            cursor.execute('''
+                UPDATE Инвентарь SET количество = количество + 1
+                WHERE id_инвентаря = ?
+            ''', [row[0]])
+        else:
+            cursor.execute('''
+                INSERT INTO Инвентарь (id_игрока, id_предмета, количество)
+                VALUES (?, ?, 1)
+            ''', [player_id, item_id])
         
         cursor.execute("SELECT монеты FROM Игрок WHERE id_игрока = ?", [player_id])
         coins = cursor.fetchone()[0]

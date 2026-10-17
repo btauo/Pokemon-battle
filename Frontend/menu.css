@@ -589,3 +589,10 @@ body::before{
   color: #1f2222;
   font-weight: 700;
 }
+
+
+/*======Popup======*/
+.window-menu{
+  height: min(180px, 92vh);
+  display: block;
+}
