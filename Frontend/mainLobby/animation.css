@@ -49,16 +49,16 @@
 }
 @keyframes hitAndBack {
   0% {
-    left: 13%;
-    bottom: 42%;
+    left: 27%;
+    bottom: 20%;
   }
   50% {
-    left: 13%;           
-    bottom: 54%;        
+    left: 27%;           
+    bottom: 32%;        
   }
   100% {
-    left: 33%;
-    bottom: 58%; 
+    left: 63%;
+    bottom: 48%; 
   }
 }    
 .EnemyPokemon-hit {
@@ -66,16 +66,16 @@
 }
 @keyframes hitAndBackEnemy {
   0% {
-    left: 32%;
-    bottom: 58%;
+    left: 62%;
+    bottom: 48%;
   }
   50% {
-    left: 32%;           
-    bottom: 68%;        
+    left: 62%;           
+    bottom: 58%;        
   }
   100% {
-    left: 13%;
-    bottom: 42%;
+    left: 27%;
+    bottom: 20%;
   }
 }
 

@@ -9,7 +9,6 @@ body{
   font-family: 'Nunito', sans-serif;
   color: black;
   min-height: 100vh;
-  
 }
 button, input, select, textarea {
   font-family: inherit;
@@ -25,7 +24,11 @@ button, input, select, textarea {
   align-items: center;
   justify-content: space-between;
   padding: 10px 40px;
-  min-height: 10vh;
+  height: 85px;
+  min-height: 85px;
+  width: max-content;      
+  min-width: 100%;          
+  box-sizing: border-box;
 }
 
 .header img{

@@ -1,15 +1,16 @@
 const secondPlayerPokemon = document.querySelector('.pokemonBot'); /*secondPlayer*/
 const playerPokemon = document.querySelector('.pokemonPlayer'); /* First Player*/
+const imageZone = document.querySelector('.imageZone');
 let pokeballDefo = document.querySelector('.pokeballImg');
 let pokeballImg = document.querySelector('.pokeballImg img'); /* For switch pokemon using pokeball animated pokeball */
 let direction;
 
 export function updateButtonAnimationForPokemon(who = 'player',attackName, arrayCord) {
     direction = who;
-    const startX = (direction==='player' ? 13 : 32);
-    const startY = (direction==='player' ? 42 : 59);
-    const endX = (direction==='player' ? 32 : 13);
-    const endY = (direction==='player' ? 59 : 42);
+    const startX = (direction==='player' ? 26 : 62);
+    const startY = (direction==='player' ? 20 : 49);
+    const endX = (direction==='player' ? 62 : 26);
+    const endY = (direction==='player' ? 49 : 20);
 
     
     let WhosPokemon = (direction === 'player' ? playerPokemon : secondPlayerPokemon);
@@ -82,7 +83,7 @@ function createPoisonBall(startX, startY, endX, endY, q) {
     ball.style.width = '20px';
     ball.style.height = '20px';
 
-    document.body.appendChild(ball);
+    imageZone.appendChild(ball);
     const duration = 500;
 
     let startTime = null;
@@ -120,7 +121,7 @@ function createLeaf(startX, startY, endX, endY, index) {
     leaf.style.bottom = (startY) + '%';
     leaf.style.width = '80px';
     leaf.style.height = '80px';
-    document.body.appendChild(leaf);
+    imageZone.appendChild(leaf);
 
     let duration = 300;
 
@@ -187,8 +188,8 @@ export function paraballaNBack(startX, startY, endX, endY, ballName, q) {
 
                 bottom.style.opacity = 0;
                 top.style.opacity = 0;
-                document.body.appendChild(bottom);
-                document.body.appendChild(top);
+                imageZone.appendChild(bottom);
+                imageZone.appendChild(top);
 
                 const durationX2 = 350;
                 let startTimeX2 = null;
@@ -226,7 +227,7 @@ export function paraballaNBack(startX, startY, endX, endY, ballName, q) {
                     greenOrb.style.width = '80px';
                     greenOrb.style.height = '80px';
                 }
-                document.body.appendChild(greenOrb);
+                imageZone.appendChild(greenOrb);
                 setTimeout(() => { greenOrb.remove() }, 500);
             }
         }
@@ -247,7 +248,7 @@ function thunderShock(startX, startY, endX, endY, ballName) {
     electroball.style.bottom = (startY) + '%';
     electroball.style.width = '140px';
     electroball.style.height = '140px';
-    document.body.appendChild(electroball);
+    imageZone.appendChild(electroball);
 
     let duration = 700;
 
@@ -290,7 +291,7 @@ function Thunderbolt(startX, startY, sizeOff) {
     let duration = 200;
     let startTime = null;
     let goalHeight = 300;
-    document.body.appendChild(thunder);
+    imageZone.appendChild(thunder);
 
     function animate(currentTime) {
         if (!startTime) startTime = currentTime;
@@ -311,7 +312,7 @@ function Thunderbolt(startX, startY, sizeOff) {
 function dig(startX, startY, endX, endY,q) {
     const duration = 2000;
     let startTime = null;
-    const bottomTarget = 26;
+    const bottomTarget = 10;
 
     function animate(currentTime) {
         if (!startTime) startTime = currentTime;
@@ -395,8 +396,8 @@ function bodySlam(startX, startY, endX, endY, ballName, q) {
             q.style.left = (currX) + '%';
             q.style.bottom = (currY) + '%';
             if (!check) {
-                document.body.appendChild(iceBallOrb1);
-                document.body.appendChild(iceBallOrb2);
+                imageZone.appendChild(iceBallOrb1);
+                imageZone.appendChild(iceBallOrb2);
                 check = true;
             }
             const newX1 = endX + (endX - 10 - endX) * (progress - 0.5) * 2;
@@ -449,7 +450,7 @@ function SwiftReady(startX, startY, endX, endY, ballName) {
     }
     iceBall.className = 'leaf-class';
 
-    document.body.appendChild(iceBall);
+    imageZone.appendChild(iceBall);
     let duration = 300;
     let startTime = null;
 
@@ -489,7 +490,7 @@ function watergun(startX, startY, endX, endY) {
     icegun.style.height = '90px';
     icegun.className = 'leaf-class';
 
-    document.body.appendChild(icegun);
+    imageZone.appendChild(icegun);
     let startTime = null;
     const duration = 350;
 
@@ -524,7 +525,7 @@ function bubleBeam(startX, startY, endX, endY) {
     ball.style.position = 'absolute';
     ball.style.left = startX + '%';
     ball.style.bottom = startY + '%';
-    document.body.appendChild(ball);
+    imageZone.appendChild(ball);
 
     let startTime = null;
     const duration = 350;
@@ -558,7 +559,7 @@ function bigBall(startX, startY, endX, endY) {
     ball.style.left = startX + '%';
     ball.style.bottom = startY + '%';
 
-    document.body.appendChild(ball);
+    imageZone.appendChild(ball);
 
     let startTime = null;
     const duration = 350;
@@ -598,7 +599,7 @@ function waterBeam(startX, startY, endX, endY) {
     ball.style.position = 'absolute';
     ball.style.left = startX + '%';
     ball.style.bottom = startY + '%';
-    document.body.appendChild(ball);
+    imageZone.appendChild(ball);
 
     let startTime = null;
     const duration = 350;
@@ -633,7 +634,6 @@ function animateParabola(startX,startY,endX,endY) {
     pokeballImg.style.opacity = (1-progress+0.3);
     
     let currentX = startX + (endX - startX) * progress;
-    let parabolaHeight = 40;
     let currentY = startY + (endY - startY) * progress + progress * (1 - progress);
     
     

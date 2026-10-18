@@ -1,9 +1,15 @@
 :root{
-  --buttonWidth: calc(50vw/4 - 13px);
+  --buttonWidth: calc(960px/4 - 13px);
   --anim-color: rgb(16, 185, 129);
   --anim-glow: rgb(110, 231, 183);
   --anim-bg: rgb(7, 80, 63);
   --anim-text: rgb(209, 250, 229);
+}
+html{
+  overflow-x: hidden;
+}
+body {
+  min-width: 960px; 
 }
 
 .header::before {
@@ -45,24 +51,26 @@
 /*Позиция покемона игрока*/
 .pokemonPlayer{
   position: absolute;
-  left:13%;
-  bottom:42%;
+  left:27%;
+  bottom:20%;
 }
 /*Позиция покемона противника*/
 .pokemonBot{
   position: absolute;
-  left:32%;
-  bottom:57%;
+  left:62%;
+  bottom:47%;
 }
 
 /*Зоны слева*/
 .threeZones{
-  width: 100vw;
-  height: 90vh; 
+  width: max-content;
+  min-width: 100%;
+  height: calc(100vh - 85px);
   display: flex; 
 }
 .fightZone{
-  width: 50%;
+  width: 959px;
+  min-width: 960px;
   height: 100%;
   border-right: solid 1px #AAA;
   display: flex;
@@ -76,32 +84,48 @@
 }
 .battleLog{
   overflow-y: scroll;
-  width: 30%;
+  width: 560px;
+  min-width: 560px;
+}
+@media (max-width: 960px) {
+  .battleLog {
+    display: none;  
+  }
 }
 .someInfo{
-  width: 20%;
+  flex: 1;  
+}
+@media (max-width: 1520px) {
+  .someInfo {
+    display: none;  
+  }
 }
 
 .imageZone{
   width: 100%;
-  height: 70%;
+  height: 600px;
+  min-height: 600px;
   background-image: url('../image/battle_background.webp');
   background-size: 100% 100%; 
   background-repeat: no-repeat;
   border-bottom: solid 1px #AAA;
   z-index: -1; 
+  position: relative;
 }
 
 /*Текст и кнопки под полем*/
 .textUnderImg{
+  width: 100%;
   margin: 10px;
 }
 .textBattleField{
+  width: 100%;
   margin: 0 10px 10px 10px;
   font-size: 1.3rem;
   font-weight: bold;
 }
 .text-Battle-Log{
+  
   background: #e6e7e7;
   font-size: 1.5rem; 
   font-weight: bold; 
@@ -110,7 +134,7 @@
   text-transform: uppercase; 
   padding: 10px; 
   
-  
+  width: 100%;
   /* Граница */
   border-bottom: 1px solid #AAAAAA;
     
@@ -126,6 +150,7 @@
   color: #AB0047;
 }
 .divSkillName{
+  width: 100%;
   margin: 0 10px 10px 10px;
 }
 
@@ -196,12 +221,12 @@
   height: 10px;
 }
 .playerHp {
-  left: 12%;
-  bottom: 56%;
+  left: 25%;
+  bottom: 41%;
 }
 .enemyHp {
-  left: 30.5%;
-  bottom: 71%;
+  left: 60%;
+  bottom: 67%;
 }
 .playerHp,.enemyHp{
   position: absolute;
