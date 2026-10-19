@@ -110,10 +110,7 @@ body::before{
 }
 
 
-.avatar-big{
-  font-size: 3.5rem;
-  color: #e74c3c;
-}
+
 .coinImage{
   width: 11px;
 }
@@ -569,6 +566,13 @@ body::before{
 .avatar:hover{
   background-color: #b3aeaebe;
   border: 1px solid #888787be;
+}
+.avatar-big{
+  height: 56px;
+  width: 56px;
+  background-image: url('./image/Trainers/trainers-sheet.png'); 
+  background-size: 896px 1064px; 
+  background-repeat: no-repeat;
 }
 .closeAvatars{
   align-items: center;

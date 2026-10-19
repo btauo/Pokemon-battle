@@ -19,6 +19,9 @@ const pokemonGrid = document.querySelector('.pokemonGrid'); /* grid of six pokem
 const setText = document.querySelector('.setText'); /* text under six pokemons "Выбрано: 0/3" - selected 0/3. to change number*/
 const buttonBattle = document.querySelector('.pokemonCard-button'); /* button under six pokemons to enter fidner battle */
 const myPokemons = await loadMyPokemons(); /* [{имя,опыт,опыт_некст,уровень}, ...] */
+const closeAvatars = document.querySelector('.closeAvatars'); /* button закрыть */
+const modalWindowForAvatar = document.querySelector('.modalWindowForAvatar'); 
+const openAvatar = document.querySelector('.openAvatar');
 let stats = document.querySelector('.statistic-grid'); /* stats of player like amonut of games winrate etc */
 let allpotionBlock = document.querySelector('.allpotion'); /* potions of healing spells */
 let pointerPlayerList = document.querySelector('.player-list');/* player in menu righted */
@@ -262,7 +265,6 @@ setInterval(refreshPlayerList, 3000);
 const pokemonCard = document.querySelectorAll('.pokemonCard'); /* array of div pokemonCards */
 pokemonCard.forEach((element) => {
     element.addEventListener('click', () => {
-        console.log('fsdfsd');
         if(!checkForReady){
             const pokemonName = element.getAttribute('data-name');
             if (!element.classList.contains('selected') && PlayerPick.length < 3) {
@@ -340,9 +342,9 @@ settingsButton.addEventListener('click', ()=>{
 /*=====================AvatarsButton=====================*/
 let avatarsNewHtml = document.querySelector('.avatars');
 let avatarsAdd = '';
-let count = 293;
 const defRow = 16;
 const defCol = 19;
+
 
 
 for(let i = 0; i < defRow;i++){
@@ -353,10 +355,20 @@ for(let i = 0; i < defRow;i++){
     }
 }
 avatarsNewHtml.innerHTML = avatarsAdd;
+ 
+document.querySelectorAll('.avatar').forEach((el)=>{
+    const x = (parseFloat(el.style.backgroundPositionX)*0.7) + 'px' ;
+    const y = (parseFloat(el.style.backgroundPositionY)*0.7) + 'px';
 
-const closeAvatars = document.querySelector('.closeAvatars');
-const modalWindowForAvatar = document.querySelector('.modalWindowForAvatar');
-const openAvatar = document.querySelector('.openAvatar');
+    el.addEventListener('click',()=>{
+        document.querySelector('.avatar-big').style.backgroundPosition  = `${x} ${y}`
+        console.log(document.querySelector('.avatar-big'), x, y);
+    });
+
+});
+
+
+
 closeAvatars.addEventListener('click', ()=>{
     modalWindowForAvatar.style.display = 'none';
 });
