@@ -21,7 +21,7 @@ const buttonBattle = document.querySelector('.pokemonCard-button'); /* button un
 const myPokemons = await loadMyPokemons(); /* [{имя,опыт,опыт_некст,уровень}, ...] */
 const closeAvatars = document.querySelector('.closeAvatars'); /* button закрыть */
 const modalWindowForAvatar = document.querySelector('.modalWindowForAvatar'); 
-const openAvatar = document.querySelector('.openAvatar');
+const openAvatar = document.querySelector('.button-change-avatar');
 let stats = document.querySelector('.statistic-grid'); /* stats of player like amonut of games winrate etc */
 let allpotionBlock = document.querySelector('.allpotion'); /* potions of healing spells */
 let pointerPlayerList = document.querySelector('.player-list');/* player in menu righted */
@@ -315,9 +315,9 @@ document.querySelector('.btn-logout').addEventListener('click', async () => {
 
 /*=====================Settings=====================*/
 const soundToggle = document.querySelectorAll('.toggle');
-const modal = document.querySelector('.modal-window');
+const modal = document.querySelector('.modal-settings');
 const settingsButton = document.querySelector('.Settings');
-const chevron = document.querySelector('.fa-solid');
+
 let soundOn = true;
 
 soundToggle.forEach((element)=>{
@@ -332,15 +332,15 @@ modal.addEventListener('click', (e)=>{
         modal.style.display = 'none';
     }
 });
-chevron.addEventListener('click', ()=>{
-    modal.style.display = 'none';
-});
+
 settingsButton.addEventListener('click', ()=>{
+    console.log('fsdfds');
     modal.style.display = 'block';
 });
 
 /*=====================AvatarsButton=====================*/
 let avatarsNewHtml = document.querySelector('.avatars');
+
 let avatarsAdd = '';
 const defRow = 16;
 const defCol = 19;
@@ -367,14 +367,14 @@ document.querySelectorAll('.avatar').forEach((el)=>{
 
 });
 
-
+openAvatar.addEventListener('click', ()=>{
+    modalWindowForAvatar.style.display = 'block';
+});
 
 closeAvatars.addEventListener('click', ()=>{
     modalWindowForAvatar.style.display = 'none';
 });
-openAvatar.addEventListener('click', ()=>{
-    modalWindowForAvatar.style.display = 'block';
-});
+
 modalWindowForAvatar.addEventListener('click', (e)=>{
     if(e.target === modalWindowForAvatar) modalWindowForAvatar.style.display = 'none';
 });

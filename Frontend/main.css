@@ -70,7 +70,7 @@ button, input, select, textarea {
 
 /*================CSS for quit menu and accept decline battle================*/
 
-.modal-menu{
+.modal-menu,.modal-settings{
   top: 0;
   left: 0;
   position: fixed;
@@ -78,10 +78,10 @@ button, input, select, textarea {
   width: 100vw;
   background: rgba(0, 0, 0, 0.4);
   z-index: 101;
-  display: none;
+  /*display: none;*/
 }
 
-.window-menu{
+.window-menu,.modal-window{
   position:absolute;
   top:50%;
   left:50%;
