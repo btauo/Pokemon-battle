@@ -22,6 +22,8 @@ const myPokemons = await loadMyPokemons(); /* [{имя,опыт,опыт_нек�
 const closeAvatars = document.querySelector('.closeAvatars'); /* button закрыть */
 const modalWindowForAvatar = document.querySelector('.modalWindowForAvatar'); 
 const openAvatar = document.querySelector('.button-change-avatar');
+const volumeRange = document.getElementById('volumeRange');
+const volumevalue = document.querySelector('.volumevalue');
 let stats = document.querySelector('.statistic-grid'); /* stats of player like amonut of games winrate etc */
 let allpotionBlock = document.querySelector('.allpotion'); /* potions of healing spells */
 let pointerPlayerList = document.querySelector('.player-list');/* player in menu righted */
@@ -317,6 +319,8 @@ document.querySelector('.btn-logout').addEventListener('click', async () => {
 const soundToggle = document.querySelectorAll('.toggle');
 const modal = document.querySelector('.modal-settings');
 const settingsButton = document.querySelector('.Settings');
+const backtogame = document.querySelector('.backtogame');
+const quitaccount = document.querySelector('.quitaccount');
 
 let soundOn = true;
 
@@ -332,10 +336,22 @@ modal.addEventListener('click', (e)=>{
         modal.style.display = 'none';
     }
 });
+backtogame.addEventListener('click', (e)=>{
+    modal.style.display = 'none';
+});
 
 settingsButton.addEventListener('click', ()=>{
-    console.log('fsdfds');
     modal.style.display = 'block';
+});
+
+quitaccount.addEventListener('click',()=>{
+    ChangeStatus('offline');
+    localStorage.removeItem('player_id');
+    window.location.href = 'LoginForm/login.html';
+});
+
+volumeRange.addEventListener('input', (el)=>{
+    volumevalue.innerHTML = el.target.valueAsNumber + '%';
 });
 
 /*=====================AvatarsButton=====================*/

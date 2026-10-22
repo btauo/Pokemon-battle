@@ -426,12 +426,14 @@ body::before{
 }
 .modal-window{
   width: min(560px, 96vw);
+  height: max-content;
 }
 .div-avatars{
   display: flex;
   align-items: center;
   width: 90%;
   padding: 2px;
+  margin-bottom: 20px;
   background: rgba(255,255,255,0.5);
   border: 3px solid #1b2a6b;
   border-radius: 12px;
@@ -457,11 +459,11 @@ body::before{
   border-radius: 8px;
   transition: 0.25s;
 }
-.button-change-avatar:hover {
+.hover-animation:hover {
   transform: translateY(-2px);           
   box-shadow: 0 5px 0 #1b2a6b;             
 }
-.button-change-avatar:active {
+.hover-animation:active {
   transform: translateY(2px);        
   box-shadow: 0 2px 0 #1b2a6b;             
 }
@@ -478,10 +480,13 @@ body::before{
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 760px;            
+  width: 780px;            
   height: 780px;
   padding: 10px;
-  background-color: #D5D5D5;
+  background: linear-gradient(180deg, #fffbe6 0%, #ffe680 100%);
+  border: 6px solid #1b2a6b;
+  border-radius: 12px;
+  box-shadow: 0 0 0 6px #ffcb05;
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
@@ -508,7 +513,7 @@ body::before{
   display: block;
   border-radius: 4px;
   border: none;
-  background-color: #D5D5D5;
+  background-color: rgba(255,255,255,0.5);;
 }
 .avatar:hover{
   background-color: #b3aeaebe;
@@ -526,21 +531,114 @@ body::before{
   margin-top: 6px;
   padding: 8px 14px;
   font-size: 1.05rem;
-  background: #e74c3c;
-  color: aliceblue;
-  border: none;
+  background: #f0f0f0;
+  color: #1b2a6b;
+  border: 3px solid #1b2a6b;
   border-radius: 12px;
   cursor: pointer;
-}
-.closeAvatars:hover{
-  background: #e75a4b;
+  transition: 0.25s;
 }
 .changeAvatarGrid h3{
   font-size: 1.25rem;
   color: #1f2222;
   font-weight: 700;
 }
+.volume{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 12px;
+  gap:12px;
+  width: 90%;
+  border-bottom: 2px dashed rgba(27,42,107,0.2);
+  color: #1b2a6b;
+}
+.volumethings{
+  display: flex;
+  align-items: center;
+}
+.volumevalue{
+  color: #1b2a6b;
+  font-size:13px;
+  width: 45px;
+  text-align: right;
+}
+.settings-button{
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: 12px 0 18px 0;
+}
 
+.switchtheme{
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;  
+}
+.switchtheme input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 25px;
+  width: 25px;
+  left: 4px;
+  bottom: 2px;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #1e293b;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(25px);
+  -ms-transform: translateX(25px);
+  transform: translateX(25px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+.selectlanguage{
+  padding: 6px;
+  background-color: rgb(247, 251, 255);
+  border: 2px solid #1e293b;
+  border-radius: 8px;
+}
+.aboutgame,.backtogame,.quitaccount{
+  background-color: #f0f0f0;
+  color: #1e293b;
+  border: 3px solid #1b2a6b;
+  border-radius: 8px;
+  padding: 8px;
+  transition: 0.25s;
+}
+.quitaccount{
+  background: #ee1515;
+  color: #fff; 
+}
 
 /*======Popup======*/
 .window-menu{

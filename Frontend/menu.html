@@ -15,7 +15,7 @@
       <div class="changeAvatarGrid">
         <h3>Выбери аватар</h3>
         <div class="avatars"></div>
-        <button class="closeAvatars">Закрыть</button>
+        <button class="closeAvatars hover-animation">Закрыть</button>
       </div>
 
     </div>
@@ -35,10 +35,42 @@
           <div class="trener-change-avatar">
             <p class="text-trener">Тренер</p>
             <p class="text-pickavatar">Выбери аватар и настрой игру</p>
-            <button class="button-change-avatar"><i class="fa fa-image"></i> Сменить аватар</button>
+            <button class="button-change-avatar hover-animation"><i class="fa fa-image"></i> Сменить аватар</button>
           </div>
         </div>
+
+        <div class="volume">
+          <p><i class="fa fa-volume-high"></i> Звук</p>
+          <div class="volumethings">
+            <input id="volumeRange" type="range" min="0" max="100" value="67">
+            <span class="volumevalue">67%</span>
+          </div>
+        </div>
+
+        <div class="volume change-theme">
+          <p><i class="fa fa-palette"></i> Тёмная тема</p>
+          <label class="switchtheme">
+            <input type="checkbox">
+            <span class="slider round"></span>
+          </label>
+        </div>
+
+        <div class="volume language">
+          <p><i class="fa fa-globe"></i></i> Язык</p>
+          <select class="selectlanguage" id="languageSelect">
+            <option value="ru">🇷🇺 Русский</option>
+            <option value="en">🇬🇧 English</option>
+            <option value="lv">🇱🇻 Latviešu</option>
+          </select>
+        </div>
         
+        <div class="settings-button">
+          <button class="aboutgame hover-animation"><i class="fa fa-circle-info"></i> О игре</button>
+          <div>
+            <button class="backtogame hover-animation"><i class="fa fa-arrow-left"></i> Назад</button>
+            <button class="quitaccount hover-animation"><i class="fa fa-right-from-bracket"></i> Выйти из аккауната</button>
+          </div>
+        </div>
       </div>
     </div>
 
