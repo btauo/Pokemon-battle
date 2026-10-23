@@ -31,6 +31,7 @@ class Database:
                 монеты INTEGER DEFAULT 5000,
                 рейтинг INTEGER DEFAULT 1000,
                 статус TEXT DEFAULT 'offline',
+                аватар INTEGER DEFAULT 0,            
                 дата_регистрации TEXT DEFAULT (datetime('now')),
                 всего_урона_нанесено INTEGER DEFAULT 0
             );
@@ -295,7 +296,7 @@ class Database:
         
         cursor.execute('''
             SELECT имя, уровень_игрока, опыт_игрока, победы, поражения,
-                всего_боёв, монеты, рейтинг, статус, дата_регистрации
+                всего_боёв, монеты, рейтинг, статус, аватар, дата_регистрации
             FROM Игрок
             WHERE id_игрока = ?
         ''', [player_id])
@@ -314,7 +315,8 @@ class Database:
                 'монеты': result[6],
                 'рейтинг': result[7],
                 'статус': result[8], 
-                'дата_регистрации': result[9]
+                'аватар': result[9], 
+                'дата_регистрации': result[10]
             }
         return {'status': 'error'}
 
@@ -356,7 +358,17 @@ class Database:
 
 
 
-
+    def set_avatar(self, player_id, avatar_id):
+        """Сменить аватар игрока"""
+        conn = self.connect()
+        cursor = conn.cursor()
+        
+        cursor.execute("UPDATE Игрок SET аватар = ? WHERE id_игрока = ?", [avatar_id, player_id])
+        
+        conn.commit()
+        conn.close()
+        
+        return {'status': 'ok', 'avatar': avatar_id}
 
 
 

@@ -543,6 +543,13 @@ body::before{
   color: #1f2222;
   font-weight: 700;
 }
+.avatar-in-settings{
+  width: 80px;
+  height: 80px;
+  min-width: 80px;
+  min-height: 80px;
+  background-image: url('./image/Trainers/trainers-sheet.png');
+}
 .volume{
   display: flex;
   justify-content: space-between;

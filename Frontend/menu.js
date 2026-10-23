@@ -24,6 +24,8 @@ const modalWindowForAvatar = document.querySelector('.modalWindowForAvatar');
 const openAvatar = document.querySelector('.button-change-avatar');
 const volumeRange = document.getElementById('volumeRange');
 const volumevalue = document.querySelector('.volumevalue');
+const avatar_big = document.querySelector('.avatar-big'); /* div to change avatar */
+const avatar_in_settings = document.querySelector('.avatar-in-settings');
 let stats = document.querySelector('.statistic-grid'); /* stats of player like amonut of games winrate etc */
 let allpotionBlock = document.querySelector('.allpotion'); /* potions of healing spells */
 let pointerPlayerList = document.querySelector('.player-list');/* player in menu righted */
@@ -44,6 +46,8 @@ async function loadMyStats() {
 }
 await loadMyStats();
 document.querySelector('.Nickname').innerText = statisticOfPlayer.имя;
+avatar_big.style.backgroundPosition  = `-${statisticOfPlayer.аватар%16 * 56}px -${Math.floor(statisticOfPlayer.аватар/16) * 56}px`
+avatar_in_settings.style.backgroundPosition  = `-${statisticOfPlayer.аватар%16 * 80}px -${Math.floor(statisticOfPlayer.аватар/16) * 80}px`
 
 async function loadMyPokemons() {
     const playerId = localStorage.getItem('player_id');
@@ -358,16 +362,17 @@ volumeRange.addEventListener('input', (el)=>{
 let avatarsNewHtml = document.querySelector('.avatars');
 
 let avatarsAdd = '';
-const defRow = 16;
-const defCol = 19;
+const defRow = 19;
+const defCol = 16;
 
 
 
 for(let i = 0; i < defRow;i++){
     for(let j = 0;j < defCol;j++){
         avatarsAdd += `
-            <button class="avatar" style="background-position: -${j*80}px -${i*80}px;"></button>
+            <button class="avatar" style="background-position: -${j*80}px -${i*80}px;" data-num="${j+i*16}"></button>
         `;
+        if(i==defRow-1 && j >=4) break;
     }
 }
 avatarsNewHtml.innerHTML = avatarsAdd;
@@ -376,9 +381,20 @@ document.querySelectorAll('.avatar').forEach((el)=>{
     const x = (parseFloat(el.style.backgroundPositionX)*0.7) + 'px' ;
     const y = (parseFloat(el.style.backgroundPositionY)*0.7) + 'px';
 
-    el.addEventListener('click',()=>{
-        document.querySelector('.avatar-big').style.backgroundPosition  = `${x} ${y}`
-        console.log(document.querySelector('.avatar-big'), x, y);
+    el.addEventListener('click',async ()=>{
+        avatar_big.style.backgroundPosition  = `${x} ${y}`
+        avatar_in_settings.style.backgroundPosition = `${el.style.backgroundPositionX} ${el.style.backgroundPositionY}`;
+        console.log(el.dataset.num);
+        const playerId = localStorage.getItem('player_id');
+        await fetch('http://localhost:5000/api/player/avatar', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                player_id: playerId,
+                avatar_id: parseInt(el.dataset.num)
+            })
+        });        
+        modalWindowForAvatar.style.display = 'none';
     });
 
 });

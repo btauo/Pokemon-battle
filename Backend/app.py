@@ -187,6 +187,12 @@ def api_last_turn():
     player_id = request.args.get('player_id')
     result = db.get_last_turn(battle_id, player_id)
     return jsonify(result)
+
+@app.route('/api/player/avatar', methods=['POST'])
+def api_set_avatar():
+    data = request.json
+    result = db.set_avatar(data['player_id'], data['avatar_id'])
+    return jsonify(result)
 # ========== СТАТИКА ==========
 
 @app.route('/')
