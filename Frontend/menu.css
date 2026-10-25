@@ -525,6 +525,7 @@ body::before{
   background-image: url('./image/Trainers/trainers-sheet.png'); 
   background-size: 896px 1064px; 
   background-repeat: no-repeat;
+  visibility: hidden;
 }
 .closeAvatars{
   align-items: center;

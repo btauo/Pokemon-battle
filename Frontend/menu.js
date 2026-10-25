@@ -25,7 +25,12 @@ const openAvatar = document.querySelector('.button-change-avatar');
 const volumeRange = document.getElementById('volumeRange');
 const volumevalue = document.querySelector('.volumevalue');
 const avatar_big = document.querySelector('.avatar-big'); /* div to change avatar */
-const avatar_in_settings = document.querySelector('.avatar-in-settings');
+const avatar_in_settings = document.querySelector('.avatar-in-settings'); /* settings */
+const aboutgame = document.querySelector('.aboutgame'); /* settings */
+const modal = document.querySelector('.modal-settings'); /* settings */
+const settingsButton = document.querySelector('.Settings'); /* settings */
+const backtogame = document.querySelector('.backtogame'); /* settings */
+const quitaccount = document.querySelector('.quitaccount'); /* settings */
 let stats = document.querySelector('.statistic-grid'); /* stats of player like amonut of games winrate etc */
 let allpotionBlock = document.querySelector('.allpotion'); /* potions of healing spells */
 let pointerPlayerList = document.querySelector('.player-list');/* player in menu righted */
@@ -46,8 +51,9 @@ async function loadMyStats() {
 }
 await loadMyStats();
 document.querySelector('.Nickname').innerText = statisticOfPlayer.имя;
-avatar_big.style.backgroundPosition  = `-${statisticOfPlayer.аватар%16 * 56}px -${Math.floor(statisticOfPlayer.аватар/16) * 56}px`
-avatar_in_settings.style.backgroundPosition  = `-${statisticOfPlayer.аватар%16 * 80}px -${Math.floor(statisticOfPlayer.аватар/16) * 80}px`
+avatar_big.style.backgroundPosition  = `-${statisticOfPlayer.аватар%16 * 56}px -${Math.floor(statisticOfPlayer.аватар/16) * 56}px`;
+avatar_big.style.visibility = 'visible';
+avatar_in_settings.style.backgroundPosition  = `-${statisticOfPlayer.аватар%16 * 80}px -${Math.floor(statisticOfPlayer.аватар/16) * 80}px`;
 
 async function loadMyPokemons() {
     const playerId = localStorage.getItem('player_id');
@@ -320,20 +326,6 @@ document.querySelector('.btn-logout').addEventListener('click', async () => {
 
 
 /*=====================Settings=====================*/
-const soundToggle = document.querySelectorAll('.toggle');
-const modal = document.querySelector('.modal-settings');
-const settingsButton = document.querySelector('.Settings');
-const backtogame = document.querySelector('.backtogame');
-const quitaccount = document.querySelector('.quitaccount');
-
-let soundOn = true;
-
-soundToggle.forEach((element)=>{
-    element.addEventListener('click', () => {
-        soundOn = !soundOn;
-        element.classList.toggle('on');
-    });
-});
 
 modal.addEventListener('click', (e)=>{
     if(e.target == modal) {
@@ -356,6 +348,10 @@ quitaccount.addEventListener('click',()=>{
 
 volumeRange.addEventListener('input', (el)=>{
     volumevalue.innerHTML = el.target.valueAsNumber + '%';
+});
+
+aboutgame.addEventListener('click', ()=>{
+    window.open('./image/ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ И ПРАВИЛА ИСПОЛЬЗОВАНИЯ ИГРОВОЙ ПЛАТФОРМЫ.pdf', '_blank');
 });
 
 /*=====================AvatarsButton=====================*/

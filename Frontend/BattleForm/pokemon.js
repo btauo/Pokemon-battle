@@ -53,6 +53,22 @@ async function loadBattle() {
 await loadBattle();
 enemyId = localStorage.getItem('enemyId') ? localStorage.getItem('enemyId') : (parseInt(myId) === battleData.player1_id) ? battleData.player2_id : battleData.player1_id;
 
+let enemyStats = null;
+async function loadEnemyStats() {
+  const response = await fetch(`http://localhost:5000/api/player/stats?player_id=${enemyId}`);
+  enemyStats = await response.json();
+  console.log('Enemy stats:', enemyStats);
+
+  const enemy_avatar = document.querySelector('.enemy-avatar');
+  const enemy_name = document.querySelector('.enemy-name');
+  const raiting_amount = document.querySelector('.raiting-amount');
+  enemy_avatar.style.backgroundPosition  = `-${enemyStats.аватар%16 * 80}px -${Math.floor(enemyStats.аватар/16) * 80}px`;
+  enemy_name.innerText = enemyStats.имя;
+  raiting_amount.innerText = enemyStats.рейтинг;
+
+}
+await loadEnemyStats();
+
 console.log(battleData)
 
 async function loadInventory() {
@@ -623,7 +639,6 @@ async function checkEnemyAttack() {
     lastTurn = result.turn;
     
     if (result.damage >= 0) {
-      console.log("скок раз ");
       updateButtonAnimationForPokemon('enemy', result.attack_name, null);
       enemyFainted = addToBattleLogAttack(result, enemyFainted, false, "log-enemy-action");
       
