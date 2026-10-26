@@ -50,6 +50,10 @@ body::before{
   border-radius: 10px;
 }
 
+.modal-menu{
+  display: block;
+}
+
 /*=====================Device-friendly=====================*/
 
 @media (max-width: 915px) {
@@ -651,5 +655,5 @@ input:checked + .slider:before {
 /*======Popup======*/
 .window-menu{
   height: min(180px, 92vh);
-  display: block;
+  
 }

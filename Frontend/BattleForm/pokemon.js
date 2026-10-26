@@ -37,6 +37,8 @@ let enemyCurrentPokemon = '';
 let imgPokemon;
 let myPokemonFainted = 0; // 0 - значт жив, 1 - значит умер, 2 - значит что мы не рисуем новый turn когда атакуем
 let enemyFainted = 0;
+let amountAliveMy = 0;
+let amountAliveEnemy = 0;
 let enemyId = null;
 
 
@@ -203,6 +205,7 @@ battleLog.innerHTML += `
 `;
 
 battleData.my_team.forEach((element)=>{
+  if(element.текущее_hp > 0) amountAliveMy++;
   if(element.имя===currentPokemon){
     const procent = Math.floor((element.текущее_hp / element.базовое_hp) * 100);
     myFill.style.width = procent + '%';
@@ -215,12 +218,16 @@ battleData.my_team.forEach((element)=>{
 });
 
 battleData.enemy_team.forEach((element)=>{
+  if(element.текущее_hp > 0) amountAliveEnemy++;
   if(element.имя===enemyCurrentPokemon){
     const procent = Math.floor((element.текущее_hp / element.базовое_hp) * 100);
     enemyFill.style.width = procent + '%';
     enemyProcentText.textContent = procent + '%';    
   }
 });
+
+document.querySelector('.pokemon-aliveMy').innerText = amountAliveMy;
+document.querySelector('.pokemon-aliveEnemy').innerText = amountAliveEnemy;
 
 /*=====================Async-Functions=====================*/
 async function enemySwitchPokemon() {
@@ -262,6 +269,8 @@ async function enemyRandomAttack(pokemonForBlock) {
   }, 700);
 
   if (result.defender_fainted) {
+    amountAliveMy-=1;
+    document.querySelector('.pokemon-aliveMy').innerText = amountAliveMy;
     if (result.enemy_all_fainted) {
       await endBattle(enemyId, myId);
       showVictoryScreen(false);
@@ -461,6 +470,8 @@ skillsButtons.forEach((element)=>{
 
     if (isAsyncMode) {
       if(result.defender_fainted){
+        amountAliveEnemy-=1;
+        document.querySelector('.pokemon-aliveEnemy').innerText = amountAliveEnemy;
         if (result.enemy_all_fainted) {
           await endBattle(myId, enemyId);
           showVictoryScreen(true);
@@ -479,6 +490,7 @@ skillsButtons.forEach((element)=>{
                   enemyPokemon.innerHTML = `<img src="../image/inMove_bot/${switchResult.new_pokemon}.gif" alt="" class="EnemyPokemonImage"></img>`;
 
                   addToBattleLogSwitch(enemyCurrentPokemon, switchResult.new_pokemon, false);
+                  turn--;
                   enemyCurrentPokemon = switchResult.new_pokemon;
                   EnemypokemonNewName.innerText = switchResult.new_pokemon;
                   enemyFill.style.width = 100 + '%';
@@ -499,6 +511,8 @@ skillsButtons.forEach((element)=>{
     }
     else{
       if(result.defender_fainted){
+        amountAliveEnemy-=1;
+        document.querySelector('.pokemon-aliveEnemy').innerText = amountAliveEnemy;
         if (result.enemy_all_fainted) {
           await endBattle(myId, enemyId);
           showVictoryScreen(true);
@@ -514,7 +528,7 @@ const pokemonSwitchButtons = document.querySelectorAll('.changePokemon');
 pokemonSwitchButtons.forEach((element)=>{
   element.addEventListener('click', async function(e) {
     if (this.innerText === currentPokemon || e.target.disabled || !isMyTurn) return;
-    console.log("sdfsdfsdfsdfsd");
+
     if(blocked && myPokemonFainted==0) return;
     blocked = true;
     currentPokemon = this.innerText;
@@ -660,6 +674,8 @@ async function checkEnemyAttack() {
     }
     
     if (result.defender_fainted) {
+        amountAliveMy-=1;
+        document.querySelector('.pokemon-aliveMy').innerText = amountAliveMy;
         if (result.my_all_fainted) {
           await endBattle(enemyId, myId);
           showVictoryScreen(false);

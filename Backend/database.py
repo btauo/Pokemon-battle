@@ -988,12 +988,25 @@ class Database:
     def challenge_player(self, challenger_id, target_id, team1):
         conn = self.connect()
         cursor = conn.cursor()
-        
+
         cursor.execute('''
-            DELETE FROM Игровая_сессия 
+            SELECT id_сессии FROM Игровая_сессия 
             WHERE (id_игрока1=? OR id_игрока2=? OR id_игрока1=? OR id_игрока2=?) 
             AND статус='waiting'
         ''', [challenger_id, challenger_id, target_id, target_id])
+        
+        old_battles = [row[0] for row in cursor.fetchall()]
+        
+        # Удаляем дочерние записи для этих боёв
+        for bid in old_battles:
+            cursor.execute('DELETE FROM Ход_боя WHERE id_сессии = ?', [bid])
+            cursor.execute('DELETE FROM Покемон_в_бою WHERE id_сессии = ?', [bid])
+            
+            cursor.execute('''
+                DELETE FROM Игровая_сессия 
+                WHERE (id_игрока1=? OR id_игрока2=? OR id_игрока1=? OR id_игрока2=?) 
+                AND статус='waiting'
+            ''', [challenger_id, challenger_id, target_id, target_id])
         
         cursor.execute(
             "INSERT INTO Игровая_сессия (id_игрока1, id_игрока2, статус) VALUES (?, ?, 'waiting')",
