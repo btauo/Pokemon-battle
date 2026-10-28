@@ -193,6 +193,12 @@ def api_set_avatar():
     data = request.json
     result = db.set_avatar(data['player_id'], data['avatar_id'])
     return jsonify(result)
+
+@app.route('/api/battle/damage', methods=['GET'])
+def api_battle_damage():
+    battle_id = request.args.get('battle_id')
+    player_id = request.args.get('player_id')
+    return jsonify(db.get_battle_damage(battle_id, player_id))
 # ========== СТАТИКА ==========
 
 @app.route('/')

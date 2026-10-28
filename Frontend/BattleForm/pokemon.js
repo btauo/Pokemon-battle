@@ -25,6 +25,9 @@ const mypokemonNewName = document.querySelector('.playerHp .pokemonName');
 const battleLog = document.querySelector('.battleLog');
 const menuButton = document.querySelector('.menuButton');
 const modal_menu = document.querySelector('.modal-menu');
+const turns_amount = document.querySelector('.turns_amount');
+const damage_dealt = document.querySelector('.damage-dealt');
+const damage_taken = document.querySelector('.damage-taken');
 
 let pokemonSkills = [];
 let battleData = [];
@@ -92,7 +95,18 @@ if (lastMove.who === 'none') isMyTurn = localStorage.getItem('enemyId') ? true :
 else if (lastMove.who === 'me') isMyTurn = false;
 else if (lastMove.who === 'enemy') isMyTurn = true;
 
+async function updateDamageStats() {
+  const res = await fetch(`http://localhost:5000/api/battle/damage?battle_id=${battleId}&player_id=${myId}`);
+  const data = await res.json();
+  return data;
+}
+const statistic = await updateDamageStats();
+console.log(statistic);
+damage_dealt.innerText = (statistic.dealt?statistic.dealt:0);
+damage_taken.innerText = (statistic.taken?statistic.taken:0);
+
 let lastTurn = (lastMove.turn?lastMove.turn:0);
+turns_amount.innerText = lastTurn;
 console.log(lastMove);
 
 
@@ -227,6 +241,7 @@ battleData.enemy_team.forEach((element)=>{
 });
 
 document.querySelector('.pokemon-aliveMy').innerText = amountAliveMy;
+document.querySelector('.myAlive').innerText = amountAliveMy;
 document.querySelector('.pokemon-aliveEnemy').innerText = amountAliveEnemy;
 
 /*=====================Async-Functions=====================*/
@@ -267,10 +282,11 @@ async function enemyRandomAttack(pokemonForBlock) {
     myFill.style.width = procent + '%';
     myProcentText.textContent = procent + '%';
   }, 700);
-
+  damage_taken.innerText = Number(damage_taken.innerText) + result.damage; 
   if (result.defender_fainted) {
     amountAliveMy-=1;
     document.querySelector('.pokemon-aliveMy').innerText = amountAliveMy;
+    document.querySelector('.myAlive').innerText = amountAliveMy;
     if (result.enemy_all_fainted) {
       await endBattle(enemyId, myId);
       showVictoryScreen(false);
@@ -297,6 +313,7 @@ function blockCurrentPokemon(pokemonName) {
 }
 function addToBattleLogSwitch(oldPokemon, newPokemon, who){
   let player = who? `${newPokemon} вышел на поле!`: `Противник убрал ${oldPokemon} и выпустил ${newPokemon}!`;
+  turns_amount.innerText = Number(turns_amount.innerText) + 1;
   battleLog.insertAdjacentHTML('beforeend', `
       <p class="log-entry log-turn">Turn ${turn}</p>
       <p class="log-entry log-switch">${player}</p>
@@ -305,6 +322,7 @@ function addToBattleLogSwitch(oldPokemon, newPokemon, who){
   turn++;
 }
 function addToBattleLogHeal(amount, who) {
+  turns_amount.innerText = Number(turns_amount.innerText) + 1;
   const healAmount = Math.abs(amount);
   const className = who ? 'log-heal-player' : 'log-heal-enemy';
   const player = who 
@@ -323,6 +341,7 @@ function addToBattleLogAttack(result, whatCheck, player, className){
   let f = player?currentPokemon:enemyCurrentPokemon;
   let s = player?enemyCurrentPokemon:currentPokemon;
   if (whatCheck === 0) {
+    turns_amount.innerText = Number(turns_amount.innerText) + 1;
     battleLog.insertAdjacentHTML('beforeend', `
       <p class="log-entry log-turn">Turn ${turn}</p>
     `);
@@ -458,7 +477,7 @@ skillsButtons.forEach((element)=>{
     const result = await response.json();
     console.log(result);// Атаковали сняли в бд хп противнику 
     myPokemonFainted = addToBattleLogAttack(result, myPokemonFainted, true, "log-player-action");
-
+    damage_dealt.innerText = Number(damage_dealt.innerText) + result.damage; 
     const enemyCurrentProcent = parseInt(document.querySelector('.enemyHp .hp-bar-fill').style.width);
     let procent;
     if (result.defender_hp === 0) procent = 0;
@@ -653,6 +672,7 @@ async function checkEnemyAttack() {
     lastTurn = result.turn;
     
     if (result.damage >= 0) {
+      damage_taken.innerText = Number(damage_taken.innerText) + result.damage; 
       updateButtonAnimationForPokemon('enemy', result.attack_name, null);
       enemyFainted = addToBattleLogAttack(result, enemyFainted, false, "log-enemy-action");
       
@@ -676,6 +696,7 @@ async function checkEnemyAttack() {
     if (result.defender_fainted) {
         amountAliveMy-=1;
         document.querySelector('.pokemon-aliveMy').innerText = amountAliveMy;
+        document.querySelector('.myAlive').innerText = amountAliveMy;
         if (result.my_all_fainted) {
           await endBattle(enemyId, myId);
           showVictoryScreen(false);

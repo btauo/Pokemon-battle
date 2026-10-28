@@ -99,7 +99,7 @@ body {
   align-items: center;
   flex: 1; 
 }
-.enemy-info,.score-in-battle{
+.enemy-info,.score-in-battle,.statistics-battle{
   width: 90%;
   margin-top: 15px;
   display: flex;
@@ -186,6 +186,23 @@ body {
   font-size: 1.2rem;
   opacity: 0.8;
   font-weight: 800;  
+}
+.onerow-statistic{
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  padding: 3px;
+  margin-bottom: 10px;
+  color: #030614;
+  border-bottom: 1px dashed #e0e0e0;
+}
+.css-digit{
+  font-weight: 800;
+  color: #1b2a6b;
+  font-size: 1.1rem;
+}
+.no-border{
+  border: none;
 }
 @media (max-width: 1520px) {
   .someInfo {

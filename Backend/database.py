@@ -507,6 +507,30 @@ class Database:
             'level_up': True,
             'exp_gained': exp_gained
         }
+
+    def get_battle_damage(self, battle_id, player_id):
+        """Урон нанесённый и полученный за текущий бой"""
+        conn = self.connect()
+        cursor = conn.cursor()
+        
+        # Нанесённый (мой урон)
+        cursor.execute('''
+            SELECT COALESCE(SUM(урон), 0) FROM Ход_боя
+            WHERE id_сессии = ? AND id_игрока = ? AND урон > 0
+        ''', [battle_id, player_id])
+        dealt = cursor.fetchone()[0]
+        
+        # Полученный (урон по моим покемонам)
+        cursor.execute('''
+            SELECT COALESCE(SUM(х.урон), 0)
+            FROM Ход_боя х
+            JOIN Покемон_в_бою пб ON х.id_защищающегося = пб.id_покемона_в_бою
+            WHERE х.id_сессии = ? AND пб.id_игрока = ? AND х.урон > 0
+        ''', [battle_id, player_id])
+        taken = cursor.fetchone()[0]
+        
+        conn.close()
+        return {'dealt': dealt, 'taken': taken}
     
     # ========== БОЙ ==========
 
