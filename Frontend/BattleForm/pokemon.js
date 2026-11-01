@@ -615,6 +615,16 @@ modal_menu.addEventListener('click', (element)=>{
     setTimeout(()=>{window.location.href = '/menu.html';},50);
   }
 });
+
+document.querySelector('.surrenderrock').addEventListener('click', ()=>{
+  modal_menu.style.display = 'none';
+  endBattle(enemyId, myId, true);
+  setTimeout(()=>{window.location.href = '/menu.html';},50);
+});
+
+document.querySelector('.helprock').addEventListener('click', ()=>{
+  window.open('../image/ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ И ПРАВИЛА ИСПОЛЬЗОВАНИЯ ИГРОВОЙ ПЛАТФОРМЫ.pdf', '_blank');
+});
 /*=====================Blitz-Battle=====================*/
 
 
